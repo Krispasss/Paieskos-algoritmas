@@ -1,0 +1,8 @@
+data/
+*.parquet
+*.csv
+*.json
+*.npy
+artifacts/
+*.pkl
+*.npy
