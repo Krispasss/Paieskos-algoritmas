@@ -8,17 +8,17 @@ LD1. Paieškos algoritmų tyrimas
 
 ## Visa sistema
 
-Tekstas
-  ↓
-Transformer (SentenceTransformer)
-  ↓
-Embedding (vektorius)
-  ↓
-KMeans → Temos
-  ↓
-KeyBERT → Raktažodžiai
-  ↓
-Cosine similarity → Paieška
+Tekstas 
+  ↓ 
+Transformer (SentenceTransformer) 
+  ↓ 
+Embedding (vektorius) 
+  ↓ 
+KMeans → Temos 
+  ↓ 
+KeyBERT → Raktažodžiai 
+  ↓ 
+Cosine similarity → Paieška 
 
 
 Sistema atlieka 3 pagrindinius procesus:
@@ -29,7 +29,7 @@ Sistema atlieka 3 pagrindinius procesus:
 
 # SentenceTransformer 
 
-Įvertina, kurie žodžiai sakinyje yra svarbiausi ir supranat kontekstą.
+Įvertina, kurie žodžiai sakinyje yra svarbiausi ir supranta kontekstą.
 
 # Embedding - didelis vektorius, kuris atspindi teksto semantinę prasmę.
 
