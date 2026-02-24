@@ -9,15 +9,15 @@ LD1. Paieškos algoritmų tyrimas
 ## Visa sistema
 
 Tekstas
-   ↓
+  ↓
 Transformer (SentenceTransformer)
-   ↓
+  ↓
 Embedding (vektorius)
-   ↓
+  ↓
 KMeans → Temos
-   ↓
+  ↓
 KeyBERT → Raktažodžiai
-   ↓
+  ↓
 Cosine similarity → Paieška
 
 
@@ -27,16 +27,18 @@ Sistema atlieka 3 pagrindinius procesus:
 2. Tekstų sugrupavimas pagal semantinį panašumą (KMeans)
 3. Semantinė paieška pagal vartotojo įvestą frazę
 
-## SentenceTransformer - įvertina, kurie žodžiai sakinyje yra svarbiausi ir supranat kontekstą.
+# SentenceTransformer 
 
-## Embedding - didelis vektorius, kuris atspindi teksto semantinę prasmę.
+Įvertina, kurie žodžiai sakinyje yra svarbiausi ir supranat kontekstą.
 
-# Pvz.
-# Straipsnis → [0.13, -0.22, 0.91, ..., 0.004]
+# Embedding - didelis vektorius, kuris atspindi teksto semantinę prasmę.
+
+Pvz.
+Straipsnis → [0.13, -0.22, 0.91, ..., 0.004]
 
 Du panašios prasmės tekstai turės panašius vektorius, o skirtingi tekstai bus toli vienas nuo kito vektorinėje erdvėje.
 
-## KMeans - temų grupavimas
+# KMeans - temų grupavimas
 
 Kaip tai veikia:
 
@@ -48,7 +50,7 @@ Kaip tai veikia:
 Rezultatas - Straipsniai su panašia prasme atsiduria toje pačioje temoje. Temos atsiranda automatiškai (unsupervised learning).
 
 
-## KeyBERT - raktažodžių išgavimas
+# KeyBERT - raktažodžių išgavimas
 
 Procesas:
 
@@ -60,7 +62,7 @@ Procesas:
 Raktažodis yra tas, kuris geriausiai semantiškai atspindi dokumentą.
 
 
-## Kaip veikia paieška
+# Kaip veikia paieška
 
 Kai vartotojas įveda frazę:
 
