@@ -8,17 +8,7 @@ LD1. Paieškos algoritmų tyrimas
 
 ## Visa sistema
 
-Tekstas 
-  ↓ 
-Transformer (SentenceTransformer) 
-  ↓ 
-Embedding (vektorius) 
-  ↓ 
-KMeans → Temos 
-  ↓ 
-KeyBERT → Raktažodžiai 
-  ↓ 
-Cosine similarity → Paieška 
+![schema](image-1.png)
 
 
 Sistema atlieka 3 pagrindinius procesus:
