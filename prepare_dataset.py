@@ -55,15 +55,15 @@ def main():
         data = json.load(f)
 
     print("Converting to DataFrame...")
-    # tavo sample buvo kaip {"1": {...}, "2": {...}} -> orient="index"
+    # sample buvo kaip {"1": {...}, "2": {...}} -> orient="index"
     df = pd.DataFrame.from_dict(data, orient="index")
 
     print("Original columns:", df.columns.tolist())
 
-    # Pervadinimai (pagal tavo sample)
+    # Pervadinimai
     df = df.rename(columns={
-        "Titile": "title",        # pas tave buvo klaida "Titile"
-        "Title": "title",         # jei visgi kai kur yra "Title"
+        "Titile": "title",        # faile klaida "Titile"
+        "Title": "title",         # jei yra "Title"
         "Description": "description",
         "Content": "content",
     })

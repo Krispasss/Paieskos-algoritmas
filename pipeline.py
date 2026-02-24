@@ -82,7 +82,7 @@ def cluster_topics(embeddings: np.ndarray, n_clusters: int, random_state: int = 
 def full_pipeline(n_topics: int = 5):
     df = load_dataset(DATA_PARQUET)
 
-    df = extract_keywords(df, top_n=6)          # arba tavo optimizuota versija
+    df = extract_keywords(df, top_n=6)
     embeddings = build_embeddings(df, batch_size=128)
 
     km = cluster_topics(embeddings, n_clusters=n_topics)
