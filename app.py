@@ -11,21 +11,25 @@ ART_DIR.mkdir(exist_ok=True)
 
 ART_ARTICLES = ART_DIR / "articles.parquet"
 ART_EMB = ART_DIR / "embeddings.npy"
-ART_KM = ART_DIR / "kmeans.pkl"
 ART_TOPICS = ART_DIR / "topic_keywords.json"
 ART_META = ART_DIR / "meta.json"
+ART_KW_MAP = ART_DIR / "kw_to_topic.json"
+ART_KW_KMEANS = ART_DIR / "kmeans_keywords.pkl"
+
 
 def artifacts_ok() -> bool:
-    required = [ART_ARTICLES, ART_EMB, ART_KM, ART_TOPICS]  # meta.json nebereikalingas
+    required = [ART_ARTICLES, ART_EMB, ART_TOPICS, ART_META, ART_KW_MAP, ART_KW_KMEANS]
     if not all(p.exists() for p in required):
         return False
     if ART_ARTICLES.stat().st_size == 0:
         return False
     return True
 
+
 with st.sidebar:
     st.header("Nustatymai")
-    n_topics = st.slider("Temų skaičius (KMeans klasteriai)", 2, 10, 5)
+
+    n_topics = st.slider("Temų skaičius", 2, 10, 5)
 
     if st.button("Perskaičiuoti temas (paleisti pipeline)"):
         with st.spinner("Skaičiuojama..."):
@@ -36,7 +40,8 @@ if not artifacts_ok():
     st.warning("Artifacts dar nėra (arba sugadinti). Paspausk: 'Perskaičiuoti temas (paleisti pipeline)'.")
     st.stop()
 
-df, embeddings, km, topic_keywords, meta = load_artifacts()
+# Naujo pipeline load_artifacts() grąžina 6 reikšmes
+df, embeddings, topic_keywords, kw_to_topic, km_keywords, meta = load_artifacts()
 current_topics = int(meta.get("n_topics", df["topic_id"].nunique()))
 
 if current_topics != n_topics:
@@ -44,28 +49,27 @@ if current_topics != n_topics:
 
 # --- Paieška ---
 st.subheader("Paieška")
-query = st.text_input("Įvesk paieškos frazę", value="")
+query = st.text_input("Įvesk paieškos frazę (tinka ir vienas žodis, ir sakinys)", value="")
 top_k = st.slider("Rezultatų kiekis", 3, 10, 5)
 
 if query.strip():
     results = search(query, df, embeddings, top_k=top_k)
     for _, row in results.iterrows():
         st.markdown(f"### {row['title']}")
-        st.write(f"Tema: {int(row['topic_id']) + 1} | Similarity: {row['score']:.3f}")  # +1 numeracijai
+        st.write(f"Tema: {int(row['topic_id']) + 1} | Similarity: {row['score']:.3f}")
         st.caption(row["text"][:350] + "...")
         st.divider()
 
 # --- Temos ---
 st.subheader(f"Temos ({current_topics})")
 
-# dinaminis stulpelių skaičius pagal temų kiekį
-cols = st.columns(min(current_topics, 5))  # kad nesuspaustų per daug; jei >5, rodysim eilėmis
-
+cols = st.columns(min(current_topics, 5))
 topics = list(range(current_topics))
+
 for i, t in enumerate(topics):
     col = cols[i % len(cols)]
     with col:
-        st.markdown(f"## Tema {t + 1}")  # numeracija nuo 1
+        st.markdown(f"## Tema {t + 1}")
         st.write("**Raktažodžiai:** " + ", ".join(topic_keywords.get(t, [])[:10]))
 
         sample = df[df["topic_id"] == t].head(10)
@@ -73,6 +77,5 @@ for i, t in enumerate(topics):
         for title in sample["title"].tolist():
             st.write("• " + title)
 
-    # jei turim daugiau nei 5 temas, kas 5 perkeliam į naują eilę
     if (i + 1) % len(cols) == 0 and (i + 1) < len(topics) and current_topics > 5:
         cols = st.columns(min(current_topics - (i + 1), 5))
