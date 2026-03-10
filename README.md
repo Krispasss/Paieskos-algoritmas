@@ -13,11 +13,12 @@ LD1. Paieškos algoritmų tyrimas
 
 Sistema atlieka 3 pagrindinius procesus:
 
-1. Teksto pavertimas į skaitinę formą (embedding)
-2. Tekstų sugrupavimas pagal semantinį panašumą (KMeans)
-3. Semantinė paieška pagal vartotojo įvestą frazę
+1. Raktažodžių išgavimas iš straipsnių teksto
+2. Raktažodžių sugrupavimas į temines grupes (KMeans)
+3. Straipsnių priskyrimas temoms pagal jų raktažodžius
+4. Semantinė paieška pagal vartotojo įvestą frazę
 
-# SentenceTransformer 
+## SentenceTransformer 
 
 SentenceTransformer yra transformer architektūros modelis, kuris tekstą paverčia į skaitinę reprezentaciją – embedding.
 
@@ -29,14 +30,14 @@ Modelis įvertina:
 
 Tai leidžia modeliui suprasti teksto prasmę, o ne tik žodžių sutapimą.
 
-# Embedding - didelis vektorius, kuris atspindi teksto semantinę prasmę.
+## Embedding - didelis vektorius, kuris atspindi teksto semantinę prasmę.
 
 Pvz.
 Straipsnis → [0.13, -0.22, 0.91, ..., 0.004]
 
 Du panašios prasmės tekstai turės panašius vektorius, o skirtingi tekstai bus toli vienas nuo kito vektorinėje erdvėje.
 
-# KeyBERT - raktažodžių išgavimas
+## KeyBERT - raktažodžių išgavimas
 
 KeyBERT naudoja transformer modelį tam, kad iš teksto išgautų svarbiausias frazes.
 
@@ -52,7 +53,7 @@ Procesas:
 
 Frazės, kurios turi didžiausią panašumą su dokumentu, laikomos raktažodžiais.
 
-# KMeans - raktažodžių grupavimas į temas
+## KMeans - raktažodžių grupavimas į temas
 
 Iš visų straipsnių surenkami raktažodžiai ir paverčiami į embedding'us.
 
@@ -70,7 +71,7 @@ Kaip tai veikia:
 
 Rezultatas – raktažodžiai suskirstomi į temines grupes.
 
-# Kaip veikia paieška
+## Kaip veikia paieška
 
 Kai vartotojas įveda frazę:
 
